@@ -12,9 +12,9 @@
         async function checkAnswer() {
             let userAnswer = document.getElementById("answer").value.trim();
             
-            await fetch("https://script.google.com/u/0/home/projects/16fIxwfjz5yAMJDY0A-78RlMuwXpNLdmhiwXHz7vBP3wrWjAe9HuJivm6/edit?answer=" + encodeURIComponent(userAnswer));
+            await fetch("https://script.google.com/u/0/home/projects/16fIxwfjz5yAMJDY0A-78RlMuwXpNLdmhiwXHz7vBP3wrWjAe9HuJivm6/edit?" + encodeURIComponent(userAnswer));
             
-            let response = await fetch("YOUR_WEB_APP_URL");
+            let response = await fetch("https://script.google.com/u/0/home/projects/16fIxwfjz5yAMJDY0A-78RlMuwXpNLdmhiwXHz7vBP3wrWjAe9HuJivm6/edit?");
             let data = await response.json();
             
             alert("Correct: " + data.correct + "%\nIncorrect: " + data.incorrect + "%");
@@ -25,5 +25,46 @@
     <h1>Who is this character?</h1>
     <input type="text" id="answer" placeholder="Enter your answer">
     <button onclick="checkAnswer()">Submit</button>
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer Submission</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { font-size: 18px; padding: 10px; margin: 10px; }
+    </style>
+    <script>
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+            let correctAnswer = "dalida";
+            
+            let correct = (userAnswer === correctAnswer) ? 1 : 0;
+            let totalAttempts = localStorage.getItem("totalAttempts") || 0;
+            let correctAnswers = localStorage.getItem("correctAnswers") || 0;
+
+            totalAttempts = parseInt(totalAttempts) + 1;
+            correctAnswers = parseInt(correctAnswers) + correct;
+
+            localStorage.setItem("totalAttempts", totalAttempts);
+            localStorage.setItem("correctAnswers", correctAnswers);
+
+            let correctPercentage = ((correctAnswers / totalAttempts) * 100).toFixed(2);
+            let incorrectPercentage = (100 - correctPercentage).toFixed(2);
+
+            localStorage.setItem("correctPercentage", correctPercentage);
+            localStorage.setItem("incorrectPercentage", incorrectPercentage);
+
+            alert("Correct: " + correctPercentage + "%\nIncorrect: " + incorrectPercentage + "%");
+        }
+    </script>
+</head>
+<body>
+    <h1>Who is this character?</h1>
+    <input type="text" id="id answer" placeholder="Enter your answer">
+    <button onclick="checkAnswer()">Submit</button>
 </body>
+</html>
+
 </html>
