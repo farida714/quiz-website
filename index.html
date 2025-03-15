@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer Submission</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { font-size: 18px; padding: 10px; margin: 10px; }
+    </style>
+    <script>
+        async function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value.trim();
+            
+            await fetch("https://script.google.com/u/0/home/projects/16fIxwfjz5yAMJDY0A-78RlMuwXpNLdmhiwXHz7vBP3wrWjAe9HuJivm6/edit?answer=" + encodeURIComponent(userAnswer));
+            
+            let response = await fetch("YOUR_WEB_APP_URL");
+            let data = await response.json();
+            
+            alert("Correct: " + data.correct + "%\nIncorrect: " + data.incorrect + "%");
+        }
+    </script>
+</head>
+<body>
+    <h1>Who is this character?</h1>
+    <input type="text" id="answer" placeholder="Enter your answer">
+    <button onclick="checkAnswer()">Submit</button>
+</body>
+</html>
